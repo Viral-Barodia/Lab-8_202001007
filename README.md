@@ -5,6 +5,7 @@ Lab-8
 
 #### Code:
 
+~~~
 import static org.junit.Assert.*;
 
 import org.junit.Before;
@@ -34,7 +35,7 @@ public class BoaTest {
     }
 
 }
-
+~~~
 
 #### Explanation:
 
@@ -48,6 +49,7 @@ We use the assertTrue() and assertFalse() methods to make assertions about the e
 
 #### Code:
 
+~~~
 public class BoaTest {
 
     private Boa jen;
@@ -61,6 +63,152 @@ public class BoaTest {
 
     // test methods go here
 }
+~~~
 
 #### Explanation
 This creates two Boa objects named jen and ken with different values for their name, length, and favorite food properties. The jen object has a name of "Jennifer", a length of 2 feet, and a favorite food of "grapes". The ken object has a name of "Kenneth", a length of 3 feet, and a favorite food of "granola bars". The private fields jen and ken are added to the BoaTest class so that they can be accessed in the test methods.
+
+### 5. @Test stubs
+
+#### A.
+
+##### Code:
+
+~~~
+@Test
+    public void testIsHealthy() {
+        assertTrue(healthyBoa.isHealthy());
+        assertFalse(unhealthyBoa.isHealthy());
+    }
+~~~
+
+##### Output
+
+~~~
+import static org.junit.Assert.*;
+
+import org.junit.Before;
+import org.junit.Test;
+
+public class BoaTest {
+
+    private Boa healthyBoa;
+    private Boa unhealthyBoa;
+
+    @Before
+    public void setUp() throws Exception {
+        healthyBoa = new Boa("Healthy Boa", 6, "granola bars");
+        unhealthyBoa = new Boa("Unhealthy Boa", 8, "mice");
+    }
+
+    @Test
+    public void testIsHealthy() {
+        assertTrue(healthyBoa.isHealthy());
+        assertFalse(unhealthyBoa.isHealthy());
+    }
+
+    @Test
+    public void testFitsInCage() {
+        assertTrue(healthyBoa.fitsInCage(7));
+        assertFalse(unhealthyBoa.fitsInCage(6));
+    }
+
+}
+~~~
+
+The first assertion in the testIsHealthy() method tests that the isHealthy() method returns true for the healthyBoa object, and the second assertion tests that it returns false for the unhealthyBoa object.
+
+#### B.
+
+##### Code:
+
+~~~
+@Test
+    public void testFitsInCage() {
+        assertTrue(healthyBoa.fitsInCage(7));
+        assertFalse(unhealthyBoa.fitsInCage(6));
+    }
+~~~
+
+##### Output
+
+~~~
+import static org.junit.Assert.*;
+
+import org.junit.Before;
+import org.junit.Test;
+
+public class BoaTest {
+
+    private Boa healthyBoa;
+    private Boa unhealthyBoa;
+
+    @Before
+    public void setUp() throws Exception {
+        healthyBoa = new Boa("Healthy Boa", 6, "granola bars");
+        unhealthyBoa = new Boa("Unhealthy Boa", 8, "mice");
+    }
+
+    @Test
+    public void testIsHealthy() {
+        assertTrue(healthyBoa.isHealthy());
+        assertFalse(unhealthyBoa.isHealthy());
+    }
+
+    @Test
+    public void testFitsInCage() {
+        // Test when cage length is less than length of the boa
+        assertFalse(healthyBoa.fitsInCage(4));
+        assertFalse(unhealthyBoa.fitsInCage(6));
+
+        // Test when cage length is equal to length of the boa
+        assertTrue(healthyBoa.fitsInCage(6));
+        assertTrue(unhealthyBoa.fitsInCage(8));
+
+        // Test when cage length is greater than length of the boa
+        assertTrue(healthyBoa.fitsInCage(7));
+        assertTrue(unhealthyBoa.fitsInCage(10));
+    }
+
+}
+~~~
+
+##### Explanation
+
+The modified testFitsInCage() method tests the results of the fitsInCage() method when the cage length is less than, equal to, and greater than the length of the boa for both healthyBoa and unhealthyBoa objects.
+
+Since the setUp() method initializes two different Boa objects, healthyBoa and unhealthyBoa, there is no need to write separate tests for "jen" and "ken". The tests should cover both objects as specified in the setUp() method.
+
+### 7. Adding a new Method
+
+~~~
+private Boa healthyBoa;
+private Boa unhealthyBoa;
+
+@Before
+public void setUp() throws Exception {
+    healthyBoa = new Boa("Healthy Boa", 6, "granola bars");
+    unhealthyBoa = new Boa("Unhealthy Boa", 8, "mice");
+}
+
+@Test
+public void testIsHealthy() {
+    assertTrue(healthyBoa.isHealthy());
+    assertFalse(unhealthyBoa.isHealthy());
+}
+
+@Test
+public void testFitsInCage() {
+    assertTrue(healthyBoa.fitsInCage(7));
+    assertFalse(unhealthyBoa.fitsInCage(6));
+}
+
+@Test
+public void testLengthInInches() {
+    assertEquals(healthyBoa.lengthInInches(), 72);
+    assertEquals(unhealthyBoa.lengthInInches(), 96);
+}
+~~~
+
+#### Explanation
+After adding the lengthInInches() method to the Boa class, I can write a test case to verify its implementation in the BoaTest class. The test case should compare the expected result with the actual result from invoking the method on both the healthy and unhealthy Boa objects. The expected length in inches for a Boa with a length of n feet is n * 12 inches.
