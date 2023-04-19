@@ -1,9 +1,9 @@
 # Lab-8_202001007
 Lab-8
 
-***1. To test the Boa class:
+### 1. To test the Boa class:
 
-****Code:
+#### Code:
 
 import static org.junit.Assert.*;
 
@@ -36,7 +36,7 @@ public class BoaTest {
 }
 
 
-****Explanation:
+#### Explanation:
 
 We first import the necessary JUnit classes and the Boa class we want to test.
 We then create two Boa objects in the setUp() method. One is a healthy Boa and the other is an unhealthy one.
